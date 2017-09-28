@@ -14,9 +14,35 @@
         completions."
     </string>
 
-    <string name="welcome">Welcome</string>
+    <string name="welcome">Please Login into your account</string>
     <string name="login">Login</string>
+    <string name="loginFinger">Or use fingerprint</string>
+    <string name="NoReg">Not registered yet? Register now.</string>
+    <string name="RollNum">Roll Number</string>
+    <string name="Pass">Password</string>
+    <string name="rollFormat">BE/xxxxx/yy</string>
     <string name="reg">Register</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="loginDet">Please enter your details </string>
+
+
+    <string-array name="branch">
+        <item>BE</item>
+        <item>BArch</item>
+        <item>BPharm</item>
+        <item>MTech</item>
+        <item>MCA</item>
+        <item>MBA</item>
+        <item>HMCT</item>
+        <item>IMSc</item>
+        <item>Phd</item>
+    </string-array>
+    <string-array name="yr">
+        <item>2017</item>
+        <item>2016</item>
+        <item>2015</item>
+        <item>2014</item>
+        <item>2013</item>
+        <item>2012</item>
+    </string-array>
 </resources>
