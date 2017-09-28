@@ -24,9 +24,10 @@
     <string name="reg">Register</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="loginDet">Please enter your details </string>
+    <string name="name">Name</string>
 
 
-    <string-array name="branch">
+    <string-array name="course">
         <item>BE</item>
         <item>BArch</item>
         <item>BPharm</item>
@@ -36,6 +37,18 @@
         <item>HMCT</item>
         <item>IMSc</item>
         <item>Phd</item>
+    </string-array>
+    <string-array name="branch">
+        <item>IT</item>
+        <item>CSE</item>
+        <item>Mech</item>
+        <item>Civil</item>
+        <item>BioTech</item>
+        <item>Prod</item>
+        <item>Chem</item>
+        <item>CHP</item>
+        <item>EEE</item>
+        <item>ECE</item>
     </string-array>
     <string-array name="yr">
         <item>2017</item>
