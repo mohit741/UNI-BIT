@@ -1,9 +1,11 @@
 package com.xmohitx.bitstudenthelper;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,10 +25,13 @@ public class MainActivity extends AppCompatActivity {
     Button btn1,btn2;
     Spinner spin1,spin2;
     EditText uid,pass;
-    StringBuilder str=new StringBuilder();
+    StringBuilder st;
+    String br=new String();
+    String yr=new String();
     boolean f1=true,f2=true,f3=true;
-    String URL="http://10.0.2.2/BITStudentHelper/index.php";
+    String URL="http://10.0.2.2/BITStudentHelper/LOGIN.php";
     JSONParser jsonParser=new JSONParser();
+    ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         spin1.setAdapter(adp1);
         spin2=(Spinner)findViewById(R.id.YrSelector);
         final ArrayAdapter<CharSequence> adp2=ArrayAdapter.createFromResource(this,R.array.yr,android.R.layout.simple_spinner_item);
-        adp1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adp2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spin2.setAdapter(adp2);
 
         //TextFields initiated
@@ -56,8 +61,14 @@ public class MainActivity extends AppCompatActivity {
                 else f1=true;
                 if(f1&&f2&&f3)
                 {
+                    st=new StringBuilder();
+                    st.append(br);
+                    st.append(uid.getText().toString());
+                    st.append(yr);
+                    Log.d("prn",st.toString());
+                    Log.d("prn",pass.getText().toString());
                     Login login=new Login();
-                    login.execute(str.toString(),pass.getText().toString());
+                    login.execute(st.toString(),pass.getText().toString());
                 }
                 else
                 {
@@ -79,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 f1=true;
-                str.append(adp1.getItem(position).toString());
+                br=adp1.getItem(position).toString();
 
             }
 
@@ -90,13 +101,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        str.append(uid.getText().toString());
-
         spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                yr=adp2.getItem(position).toString();
                 f3=true;
-                str.append(adp2.getItem(position).toString());
             }
 
             @Override
@@ -111,6 +120,11 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progressDialog=new ProgressDialog(MainActivity.this);
+            progressDialog.setMessage("Attempting login...");
+            progressDialog.setIndeterminate(false);
+            progressDialog.setCancelable(true);
+            progressDialog.show();
         }
 
         @Override
@@ -121,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
             HashMap<String,String> params = new HashMap<>();
             params.put("UserID", name);
             params.put("Pass", password);
+            params.put("Email","");
             JSONObject json = jsonParser.makeHttpRequest(URL, "POST", params);
 
             return json;
@@ -128,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(JSONObject result) {
+            progressDialog.dismiss();
             try {
                 if (result != null) {
                     Toast.makeText(getApplicationContext(),result.getString("message"),Toast.LENGTH_LONG).show();
