@@ -1,6 +1,7 @@
 package com.xmohitx.bitstudenthelper;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     String URL="http://10.0.2.2/BITStudentHelper/LOGIN.php";
     JSONParser jsonParser=new JSONParser();
     ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,7 +139,6 @@ public class MainActivity extends AppCompatActivity {
             params.put("Pass", password);
             params.put("Email","");
             JSONObject json = jsonParser.makeHttpRequest(URL, "POST", params);
-
             return json;
         }
 
@@ -149,8 +150,9 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),result.getString("message"),Toast.LENGTH_LONG).show();
                     if(result.getInt("success")==1)
                     {
-                        Intent in= new Intent(MainActivity.this,LoginActivity.class);
-                        startActivity(in);
+                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        intent.putExtra("userid", st.toString());
+                        startActivity(intent);
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), "Unable to retrieve any data from server", Toast.LENGTH_LONG).show();
