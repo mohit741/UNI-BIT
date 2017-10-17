@@ -3,7 +3,9 @@ package com.xmohitx.bitstudenthelper;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,15 +32,34 @@ public class MainActivity extends AppCompatActivity {
     String br=new String();
     String yr=new String();
     boolean f1=true,f2=true,f3=true;
-    String URL="http://10.0.2.2/BITStudentHelper/LOGIN.php";
+    String URL="http://xmohit741x.000webhostapp.com/LOGIN.php";
     JSONParser jsonParser=new JSONParser();
     ProgressDialog progressDialog;
+    public static final String mypreference = "mypref";
+    public static final String UserName = "userid";
+    public static final String PassWord= "password";
+    public static final String login= "loggedin";
+    String userid,passsword;
+    SharedPreferences sharedpreferences;
+    boolean logged;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        sharedpreferences = getApplicationContext().getSharedPreferences(mypreference, Context.MODE_PRIVATE);
+        logged = sharedpreferences.getBoolean(login, false);
+        if(logged)
+        {
+                userid=sharedpreferences.getString(UserName, "");
+                Log.d("prn",userid);
+                passsword=sharedpreferences.getString(PassWord, "");
+                Log.d("prn",passsword);
 
+            Login login=new Login();
+            login.execute(userid,passsword);
+
+        }
         //Spinners Initiated
         spin1=(Spinner)findViewById(R.id.BrSelector);
         final ArrayAdapter<CharSequence> adp1=ArrayAdapter.createFromResource(this,R.array.course,android.R.layout.simple_spinner_item);
@@ -117,6 +138,16 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+    private void saveLogin()
+    {
+        if(!logged) {
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.putString(UserName, st.toString());
+            editor.putString(PassWord, pass.getText().toString());
+            editor.putBoolean(login, true);
+            editor.commit();
+        }
+    }
     private class Login extends AsyncTask<String, Void, JSONObject>
     {
         @Override
@@ -150,9 +181,12 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),result.getString("message"),Toast.LENGTH_LONG).show();
                     if(result.getInt("success")==1)
                     {
+                        saveLogin();
                         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                        intent.putExtra("userid", st.toString());
+                        if(st==null) intent.putExtra("userid",userid);
+                        else intent.putExtra("userid", st.toString());
                         startActivity(intent);
+                        MainActivity.this.finish();
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), "Unable to retrieve any data from server", Toast.LENGTH_LONG).show();

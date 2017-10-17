@@ -27,7 +27,7 @@ public class RegisterActivity extends AppCompatActivity {
     StringBuilder str;
     String bran,cours;
     JSONParser jsParser=new JSONParser();
-    String URL="http://10.0.2.2/BITStudentHelper/REG.php";
+    String URL="http://xmohit741x.000webhostapp.com/REG.php";
     String T="Print";
     ProgressDialog progressDialog;
     @Override
@@ -64,6 +64,11 @@ public class RegisterActivity extends AppCompatActivity {
                 if(adp1.getItem(position)!=null)
                 {
                     cours=adp1.getItem(position).toString();
+                    if(!cours.equals("BE"))
+                    {
+                        spin2.setVisibility(View.INVISIBLE);
+                        bran="nil";
+                    }
                 }
 
             }
@@ -73,6 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
+
 
         spin2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -93,22 +99,34 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                str=new StringBuilder();
-                str.append(cours);
-                str.append(roll.getText().toString());
-                str.append(yoa.getText().toString());
-                Log.d(T,str.toString());
-                Log.d(T,pass.getText().toString());
-                Log.d(T,roll.getText().toString());
-                Log.d(T,name.getText().toString());
-                Log.d(T,email.getText().toString());
-                Log.d( T,bran);
-                Log.d(T,phone.getText().toString());
-                Log.d(T,cours);
-                Log.d(T,yoa.getText().toString());
-                Log.d(T,curr.getText().toString());
-                RegisterUser reg=new RegisterUser();
-                reg.execute(str.toString(), pass.getText().toString(), roll.getText().toString(), name.getText().toString() ,email.getText().toString(), bran, phone.getText().toString(), cours,yoa.getText().toString(), curr.getText().toString());
+                if(name.getText().toString().isEmpty()) Toast.makeText(getApplicationContext(), "Enter your Name", Toast.LENGTH_LONG).show();
+                else if(roll.getText().toString().isEmpty()) Toast.makeText(getApplicationContext(), "Enter Roll number", Toast.LENGTH_LONG).show();
+                else if(cours.isEmpty()) Toast.makeText(getApplicationContext(), "Enter Course", Toast.LENGTH_LONG).show();
+                else if(bran.isEmpty()) Toast.makeText(getApplicationContext(), "Enter Branch", Toast.LENGTH_LONG).show();
+                else if(email.getText().toString().isEmpty()) Toast.makeText(getApplicationContext(), "Enter Email", Toast.LENGTH_LONG).show();
+                else if(phone.getText().toString().isEmpty()) Toast.makeText(getApplicationContext(), "Enter Phone", Toast.LENGTH_LONG).show();
+                else if(yoa.getText().toString().isEmpty()) Toast.makeText(getApplicationContext(), "Enter Year", Toast.LENGTH_LONG).show();
+                else if(curr.getText().toString().isEmpty()) Toast.makeText(getApplicationContext(), "Enter Current Semester", Toast.LENGTH_LONG).show();
+                else if(pass.getText().toString().isEmpty()) Toast.makeText(getApplicationContext(), "Enter Password", Toast.LENGTH_LONG).show();
+                else if(!pass.getText().toString().equals(repass.getText().toString())) Toast.makeText(getApplicationContext(), "Passwords do not match", Toast.LENGTH_LONG).show();
+                else {
+                    str = new StringBuilder();
+                    str.append(cours);
+                    str.append(roll.getText().toString());
+                    str.append(yoa.getText().toString());
+                    Log.d(T, str.toString());
+                    Log.d(T, pass.getText().toString());
+                    Log.d(T, roll.getText().toString());
+                    Log.d(T, name.getText().toString());
+                    Log.d(T, email.getText().toString());
+                    Log.d(T, bran);
+                    Log.d(T, phone.getText().toString());
+                    Log.d(T, cours);
+                    Log.d(T, yoa.getText().toString());
+                    Log.d(T, curr.getText().toString());
+                    RegisterUser reg = new RegisterUser();
+                    reg.execute(str.toString(), pass.getText().toString(), roll.getText().toString(), name.getText().toString(), email.getText().toString(), bran, phone.getText().toString(), cours, yoa.getText().toString(), curr.getText().toString());
+                }
             }
         });
 
@@ -165,7 +183,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if (result != null) {
                     Toast.makeText(getApplicationContext(),result.getString("message"),Toast.LENGTH_LONG).show();
                     if(result.getInt("success")==1){
-                        //TODO
+                        RegisterActivity.this.finish();
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), "Unable to retrieve any data from server", Toast.LENGTH_LONG).show();
