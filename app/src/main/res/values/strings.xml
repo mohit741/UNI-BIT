@@ -25,6 +25,9 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="loginDet">Please enter your details </string>
     <string name="name">Name</string>
+    <string name="materials">CourseMaterials</string>
+    <string name="notices">Notice</string>
+    <string name="activities">Activities</string>
 
 
     <string-array name="course">

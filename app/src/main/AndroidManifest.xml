@@ -14,7 +14,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/AppTheme.Dark">
             <intent-filter>
@@ -25,12 +26,20 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme.Dark"/>
-
+            android:theme="@style/AppTheme.Dark" />
+        <activity
+            android:name=".CourseMaterials"
+            android:theme="@style/AppTheme.Dark" />
         <activity
             android:name=".RegisterActivity"
+            android:theme="@style/AppTheme.Dark" />
+        <activity android:name=".Notices"
             android:theme="@style/AppTheme.Dark"/>
+        <activity android:name=".Activities"
+            android:theme="@style/AppTheme.Dark"/>
+        <activity android:name=".MainMenu"
+            android:theme="@style/AppTheme.Dark"
+            />
     </application>
 
 </manifest>
