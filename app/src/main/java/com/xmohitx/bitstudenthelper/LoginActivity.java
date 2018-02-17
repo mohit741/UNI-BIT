@@ -6,18 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     public static final String mypreference = "mypref";
     public static final String Branch = "branch";
     public static final String Sem= "sem";
+    public static final String Name= "name";
     SharedPreferences sharedpreferences;
 
 
@@ -95,6 +86,7 @@ public class LoginActivity extends AppCompatActivity {
                 details[4]=result.getString("CurrSem");
                 details[5]=result.getString("Branch");
                 SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString(Name, details[0]);
                 editor.putString(Branch, details[5]);
                 editor.putString(Sem, details[4]);
                 editor.commit();

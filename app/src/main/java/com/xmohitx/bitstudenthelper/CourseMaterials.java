@@ -6,25 +6,19 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 
-import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
-
 public class CourseMaterials extends AppCompatActivity {
 
-    JSONObject resultJ;
-    TextView textView;
     Button b1,b2,b3;
     String URL="http://xmohit741x.000webhostapp.com/getMaterials.php";
     JSONParser jsonParser=new JSONParser();
